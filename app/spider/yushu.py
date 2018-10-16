@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from httper import HTTP
 from flask import current_app
+from app.lib.httper import HTTP
 
 
 class YuShu(object):

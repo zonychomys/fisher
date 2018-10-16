@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import jsonify, request
-from helper import is_isbn_or_key
-from yushu import YuShu
 from app.forms.book import SearchForm
+from app.lib.helper import is_isbn_or_key
+from app.spider.yushu import YuShu
 from . import web
 
 
