@@ -14,3 +14,4 @@ python_version = "3"
 [packages]
 flask = "==1.0.2"
 requests = "*"
+wtforms = "*"
