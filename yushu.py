@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from httper import HTTP
+from flask import current_app
 
 
 class YuShu(object):
@@ -14,7 +15,14 @@ class YuShu(object):
         return result
 
     @classmethod
-    def search_by_keyword(cls, keyword, start=0, count=15):
-        url = cls.keyword_url.format(keyword, start, count)
+    def search_by_keyword(cls, keyword, page=1):
+        url = cls.keyword_url.format(
+            keyword,
+            cls.calculate_start(page),
+            current_app.config['PER_PAGE'])
         result = HTTP.get(url)
         return result
+
+    @staticmethod
+    def calculate_start(page):
+        return (page - 1) * current_app.config['PER_PAGE']
