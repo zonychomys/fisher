@@ -1,5 +1,5 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "http://mirrors.aliyun.com/pypi/simple/"
 verify_ssl = true
 name = "pypi"
 
@@ -15,3 +15,5 @@ python_version = "3"
 flask = "==1.0.2"
 requests = "*"
 wtforms = "*"
+flask-sqlalchemy = "*"
+mysqlclient = "*"
