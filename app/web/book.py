@@ -6,7 +6,7 @@ from flask import jsonify, request, render_template, flash
 from app.forms.book import SearchForm
 from app.lib.helper import is_isbn_or_key
 from app.spider.yushu import YuShu
-from app.view_models.books import BookCollection
+from app.view_models.books import BookCollection, BookViewModel
 from . import web
 
 
@@ -32,5 +32,8 @@ def search():
 
 
 @web.route('/book/<isbn>/detail')
-def book_detail():
-    pass
+def book_detail(isbn):
+    yushu = YuShu()
+    yushu.search_by_isbn(isbn)
+    book = BookViewModel(yushu.first)
+    return render_template('book_detail.html', book=book, wishes=[], gifts=[])
