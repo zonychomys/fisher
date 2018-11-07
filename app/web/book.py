@@ -2,7 +2,7 @@
 
 import json
 
-from flask import jsonify, request
+from flask import jsonify, request, render_template, flash
 from app.forms.book import SearchForm
 from app.lib.helper import is_isbn_or_key
 from app.spider.yushu import YuShu
@@ -24,6 +24,13 @@ def search():
         else:
             yushu.search_by_keyword(q, page)
         books.fill(yushu, q)
-        return json.dumps(books, default=lambda x: x.__dict__)
+        # return json.dumps(books, default=lambda x: x.__dict__)
     else:
-        return jsonify({'msg': form.errors})
+        flash('搜索的关键字不符合要求，请重新输入关键字')
+        # return jsonify({'msg': form.errors})
+    return render_template('search_result.html', books=books)
+
+
+@web.route('/book/<isbn>/detail')
+def book_detail():
+    pass
