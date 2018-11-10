@@ -1,19 +1,18 @@
 [[source]]
-url = "http://mirrors.aliyun.com/pypi/simple/"
+url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[dev-packages]
-flake8 = "*"
-pylint = "*"
-autopep8 = "*"
-
-[requires]
-python_version = "3"
-
 [packages]
-flask = "==1.0.2"
+flask = "*"
 requests = "*"
 wtforms = "*"
 flask-sqlalchemy = "*"
 mysqlclient = "*"
+
+[dev-packages]
+yapf = "*"
+flake8 = "*"
+
+[requires]
+python_version = "3"
