@@ -24,3 +24,13 @@ class RegisterForm(Form):
     def validate_nickname(self, field):
         if User.query.filter_by(nickname=field.data).first():
             raise ValidationError('用户名已注册')
+
+
+class LoginForm(Form):
+    email = StringField(
+        validators=[DataRequired(),
+                    Length(8, 64),
+                    Email(message='错误的邮箱格式')])
+    password = PasswordField(
+        validators=[DataRequired(
+            message='密码不能为空'), Length(6, 32)])
