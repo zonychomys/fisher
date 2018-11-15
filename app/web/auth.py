@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from flask_login import login_user
 from app.forms.auth import RegisterForm, LoginForm
 from app.models.base import db
 from app.models.user import User
@@ -25,9 +26,9 @@ def login():
     if request.method == 'POST' and form.validate():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
-            pass
+            login_user(user, remember=True)
         else:
-            flash()
+            flash('账号不存在或密码错')
     return render_template('auth/login.html', form=form)
 
 
