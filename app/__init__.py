@@ -3,6 +3,8 @@
 from flask import Flask
 from flask_login import LoginManager
 login_manager = LoginManager()
+login_manager.login_view = 'web.login'
+login_manager.login_message = '请先登陆或注册'
 from app.web import web
 from app.models.book import db
 
