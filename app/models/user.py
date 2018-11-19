@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.base import db, Base
 from app import config
 from app import login_manager
+from lib.helper import is_isbn_or_key
+from app.spider.yushu import YuShu
 
 
 class User(UserMixin, Base):
@@ -27,6 +29,22 @@ class User(UserMixin, Base):
 
     def check_password(self, raw):
         return check_password_hash(self._password, raw)
+
+    def can_save_to_list(self, isbn):
+        if is_isbn_or_key(isbn):
+            return False
+        yushu = YuShu()
+        yushu.search_by_isbn(isbn)
+        if not yushu.first:
+            return False
+        gifting = Gift.query.filter_by(
+            uid=self.id, isbn=isbn, launched=False).first()
+        wishing = Wish.query.filter_by(
+            uid=self.id, isbn=isbn, launched=False).first()
+        if not gifting and not wishing:
+            return True
+        else:
+            return False
 
 
 @login_manager.user_loader
