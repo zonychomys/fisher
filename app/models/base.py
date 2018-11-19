@@ -23,7 +23,7 @@ db = SQLAlchemy()
 class Base(db.Model):
     # 告诉sqlalchemy无需为此model创建数据库表
     __abstract__ = True
-    create_time = Column('create_time', Integer, )
+    create_time = Column('create_time', Integer)
     status = Column(SmallInteger, default=1)
 
     def __init__(self):
@@ -33,3 +33,10 @@ class Base(db.Model):
         for k, v in attrs_dict.items():
             if hasattr(self, k) and k != 'id':
                 setattr(self, k, v)
+
+    @property
+    def create_datetime(self):
+        if self.create_time:
+            return datetime.fromtimestamp(self.create_time)
+        else:
+            return None
