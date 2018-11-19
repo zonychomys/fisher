@@ -4,9 +4,11 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, Boolean, Float
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.base import db, Base
+from app.models.gift import Gift
+from app.models.wish import Wish
 from app import config
 from app import login_manager
-from lib.helper import is_isbn_or_key
+from app.lib.helper import is_isbn_or_key
 from app.spider.yushu import YuShu
 
 
@@ -31,7 +33,7 @@ class User(UserMixin, Base):
         return check_password_hash(self._password, raw)
 
     def can_save_to_list(self, isbn):
-        if is_isbn_or_key(isbn):
+        if is_isbn_or_key(isbn) != 'isbn':
             return False
         yushu = YuShu()
         yushu.search_by_isbn(isbn)
