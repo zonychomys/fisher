@@ -3,13 +3,16 @@ from . import web
 from flask import current_app, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.models.base import db
+from collections import namedtuple
 __author__ = '七月'
-
 
 @web.route('/my/gifts')
 @login_required
 def my_gifts():
-    return 'My Gift'
+    uid = current_user.id
+    gifts_of_mine = Gift.get_user_gifts(uid)
+    isbn_list = [gift.isbn for gift in gifts_of_mine]
+    Gift.get_wish_counts(isbn_list)
 
 
 @web.route('/gifts/book/<isbn>')
